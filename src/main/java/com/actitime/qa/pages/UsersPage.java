@@ -9,8 +9,6 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import java.time.Duration;
-
 public class UsersPage extends TestBase  {
     org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(UsersPage.class);
     @FindBy(xpath = "//div[contains(text(),'Users')]")
@@ -32,6 +30,10 @@ public class UsersPage extends TestBase  {
     WebElement email;
     @FindBy(xpath = "//div[contains(text(),'Save & Send Invitation')]")
     WebElement saveButton;
+    @FindBy(xpath = "//tbody/tr[1]/td[1][@class='userNameCell first']")
+    WebElement addedUser;
+    @FindBy(xpath = "//div[@class='createUserPanel_accountCreatedContainer']/div[@class='closeLink']/span[contains(text(),'Close')]")
+    WebElement closeButton;
 
     public UsersPage() {
         PageFactory.initElements(driver, this);
@@ -47,7 +49,7 @@ public class UsersPage extends TestBase  {
         return cssValue.contains("block") && addUserText.isDisplayed();
     }
 
-    public void fillTheForm(String fname, String lname, String mname, String mail) {
+    public String fillTheForm(String fname, String lname, String mname, String mail) {
         clickNewUserButton();
         //driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(TestUtil.IMPLICIT_WAIT));
         WebDriverWait wait = new WebDriverWait(driver, TestUtil.PAGE_LOAD_TIMEOUT);
@@ -66,5 +68,12 @@ public class UsersPage extends TestBase  {
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[contains(text(),'Save & Send Invitation')]")));
         saveButton.click();
         log.info(saveButton);
+        closeButton.click();
+        String bgColor=addedUser.getCssValue("background-color");
+        return bgColor;
     }
+//    public String validateUserAddition(){
+//        String bgColor=addedUser.getCssValue("background-color");
+//        return bgColor;
+//    }
 }

@@ -52,6 +52,11 @@ public class UserPageTest extends TestBase {
         //driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(TestUtil.PAGE_LOAD_TIMEOUT));
         usersPage.fillTheForm(firstname, lastname, middlename, email);
     }
+//    @Test(priority = 4)
+//    public void validateUserAdditionTest(){
+//        String bgColor = usersPage.validateUserAddition();
+//        Assert.assertEquals(bgColor,"rgba(231, 244, 230, 1)");
+//    }
 
     @AfterMethod
     public void tearDown() {
