@@ -1,13 +1,16 @@
-Feature: as a admin I should be able to add new users using external excel sheet
 
-  Scenario Outline: adding new user
-    Given admin of the Actitime add new user
-    When admin login to the system with username and password as  "<username>" "<password>"
-    Then admin navigate to users page
-    Then admin click on add new user button
-    Then fill all the mandatory fields using the excel sheet and send the invitation and validate user creation  "<firstname>" "<lastname>" "<middlename>" "<email>"
-    Examples:
-      |firstname  |lastname |middlename |email  |username |password |
-      |Ahamed     | Aathil         |A   |Ahamedaathil.5@gmail.com |admin  |manager  |
+@tag
+Feature: Admin Create New User
+
+  @tag1
+  Scenario: admin should be able create new user
+    Given admin navigated to Actitime Loging Page
+    When admin enter credentials and I click on Loging button
+    And admin can be able to successfuly loging to Actitime
+    When admin click on the Users section
+    Then admin should be able to successfuly switch Users Section
+    When admin Click on the New User button
+    Then admin can be able to fill the New user Form and click on submit button and verify the creation
+    And Close the browser
 
 

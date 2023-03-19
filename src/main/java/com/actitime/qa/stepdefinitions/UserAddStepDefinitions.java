@@ -8,6 +8,7 @@ import com.actitime.qa.util.TestUtil;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import org.junit.Assert;
 
 import static com.actitime.qa.base.TestBase.driver;
 import static com.actitime.qa.base.TestBase.initialization;
@@ -18,31 +19,47 @@ public class UserAddStepDefinitions extends TestBase {
     UsersPage usersPage;
     String sheetName = "userData";
     TestUtil testUtil;
-    @Given("admin of the Actitime add new user")
-    public void admin_of_the_actitime_add_new_user() {
+    @Given("admin navigated to Actitime Loging Page")
+    public void admin_navigated_to_actitime_loging_page() {
         initialization();
-        loginPage = new LoginPage();
-       homePage=loginPage.loging(properties.getProperty("username"),properties.getProperty("password"));
+        loginPage =  new LoginPage();
     }
 
-    @When("admin login to the system with username and password as  {string} {string}")
-    public void admin_login_to_the_system_with_username_and_password_as(String username, String password) {
-        loginPage.loging(username,password);
+    @When("admin enter credentials and I click on Loging button")
+    public void admin_enter_credentials_and_i_click_on_loging_button() {
+        homePage = loginPage.loging(properties.getProperty("username"), properties.getProperty("password"));
     }
 
-    @Then("admin navigate to users page")
-    public void admin_navigate_to_users_page() {
-        homePage.clickOnUsersLink();
+    @When("admin can be able to successfuly loging to Actitime")
+    public void admin_can_be_able_to_successfuly_loging_to_actitime() {
+        boolean logo = homePage.validateActiTimeLogo();
+        Assert.assertTrue(logo);
     }
 
-    @Then("admin click on add new user button")
-    public void admin_click_on_add_new_user_button() {
-       usersPage.clickNewUserButton();
+    @When("admin click on the Users section")
+    public void admin_on_the_users_section() {
+        usersPage=homePage.clickOnUsersLink();
     }
 
-    @Then("fill all the mandatory fields using the excel sheet and send the invitation and validate user creation  {string} {string} {string} {string}")
-    public void fill_all_the_mandatory_fields_using_the_excel_sheet_and_send_the_invitation_and_validate_user_creation(String fname, String lname, String mname, String email) {
-        usersPage.fillTheForm(fname,lname,mname,email);
+    @Then("admin should be able to successfuly switch Users Section")
+    public void admin_should_be_able_to_successfuly_switch_users_section() {
+        boolean usersText=usersPage.validateUsersText();
+        Assert.assertTrue(usersText);
+    }
+
+    @When("admin Click on the New User button")
+    public void admin_click_on_the_new_user_button() {
+        usersPage.clickNewUserButton();
+    }
+
+    @Then("admin can be able to fill the New user Form and click on submit button and verify the creation")
+    public void admin_can_be_able_to_fill_the_new_user_form_and_click_on_submit_button() {
+       usersPage.fillTheForm("Ahamed","Aathil","A","ahamedaathil.5@gmail.com");
+    }
+
+    @Then("Close the browser")
+    public void close_the_browser() {
         driver.quit();
     }
+
 }
